@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1008636287893",
+    "project_id": "guilty-pleasures-b678a",
+    "storage_bucket": "guilty-pleasures-b678a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1008636287893:android:d9e5e73c7abf1320ef349c",
+        "android_client_info": {
+          "package_name": "com.example.guiltypleasures"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1008636287893-imdn4c2g7pqtvml11iedosplh2l8f2mk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUmUyXY_9O8XhxQxxdyvudVvDQAAjxZBc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1008636287893-imdn4c2g7pqtvml11iedosplh2l8f2mk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
