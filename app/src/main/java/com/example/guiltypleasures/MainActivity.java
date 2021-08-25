@@ -21,6 +21,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static String JSON_Parse = "https://api.themoviedb.org/3/movie/upcoming?api_key=8ef07998664a58a01082bc2ab507fcb8";
+
+
     private TextView register;
     private EditText editTextEmail, editTextPassword;
     private Button login;
@@ -109,5 +112,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
+
     }
 }
