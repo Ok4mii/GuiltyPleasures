@@ -13,7 +13,7 @@
         android:layout_marginTop="100dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/_3441214" />
+        app:srcCompat="@drawable/GuiltyPleasuresTempLogo" />
 
     <TextView
         android:id="@+id/newUser"
