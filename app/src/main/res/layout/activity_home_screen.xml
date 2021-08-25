@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeScreen">
+    tools:context=".HomeScreen"
+    android:background="#1f1f1f">
 
    <FrameLayout
        android:layout_width="match_parent"
@@ -19,12 +20,12 @@
        android:layout_height="wrap_content"
        android:layout_alignParentBottom="true"
        android:id="@+id/bottom_nav"
+       android:background="#111111"
        app:itemBackground="?selectableItemBackgroundBorderless"
        app:itemHorizontalTranslationEnabled="true"
        app:menu="@menu/bottom_navigation"
        app:itemIconTint="@drawable/color_state"
-       app:itemTextColor="@drawable/color_state"
-       >
+       app:itemTextColor="@drawable/color_state">
 
    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
