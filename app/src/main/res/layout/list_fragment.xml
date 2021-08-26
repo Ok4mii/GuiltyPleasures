@@ -7,7 +7,7 @@
     android:background="#1f1f1f">
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/ProfileImage"
         android:layout_width="130dp"
         android:layout_height="149dp"
         android:layout_marginTop="120dp"

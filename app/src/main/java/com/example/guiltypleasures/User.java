@@ -1,8 +1,11 @@
 package com.example.guiltypleasures;
 
+import android.net.Uri;
+
 public class User {
 
     public String realname, username, email;
+    public Uri profilepicture;
 
     public User(){
 
@@ -12,6 +15,7 @@ public class User {
         this.realname = realname;
         this.username = username;
         this.email = email;
+        profilepicture = null;
     }
 
 }
