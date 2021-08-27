@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -73,7 +74,7 @@ public class ProfileFragment extends Fragment {
                 if (userprofile != null){
                     String username = userprofile.username;
                     UserName.setText(username);
-                    profileimage.setImageURI(userprofile.profilepicture);
+                    Glide.with(getActivity()).load(userprofile.profilepicture).into(profileimage);
                 }
             }
 
@@ -152,25 +153,5 @@ public class ProfileFragment extends Fragment {
                         pd.setMessage("percentage: " + (int) progresspercent);
                     }
                 });
-        imageref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        User userprofile = snapshot.getValue(User.class);
-                        if (userprofile != null){
-                            userprofile.profilepicture = uri;
-                            Toast.makeText(getActivity(), "Woah, something went right with the download link!", Toast.LENGTH_LONG).show();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(getActivity(), "Woah, something went wrong with the download link!", Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        });
     }
 }

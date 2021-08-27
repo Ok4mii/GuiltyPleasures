@@ -71,6 +71,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         String password = editTextPassword.getText().toString().trim();
         String name = editTextName.getText().toString().trim();
         String username = editTextUsername.getText().toString().trim();
+        String defaultprofilepic = "https://firebasestorage.googleapis.com/v0/b/guilty-pleasures-b678a.appspot.com/o/images%2F25d154e9-8e98-446b-a265-6901760c3e94?alt=media&token=5cdce5a4-cb81-4232-a722-3cf2c34d932c";
 
         if(name.isEmpty()){
             editTextName.setError("Give me a name yo");
@@ -110,7 +111,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                     if(task.isSuccessful()) {
-                        User user = new User(name, username, email);
+                        User user = new User(name, username, email, defaultprofilepic);
 
                         FirebaseDatabase.getInstance().getReference("Users")
                                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
