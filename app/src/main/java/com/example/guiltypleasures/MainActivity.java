@@ -54,9 +54,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.newUser:
+                //Brings user to registration
                 startActivity(new Intent(this, RegisterUser.class));
                 break;
             case R.id.logIn:
+                //Attempts to log in user
                 userLogin();
                 break;
         }
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
+        //checks if login info is entered
         if (email.isEmpty()){
             editTextEmail.setError("Gotta give an email yo");
             editTextEmail.requestFocus();
@@ -98,19 +101,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (task.isSuccessful()){
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+                    //Check if verified, send registration email if not
                     if(user.isEmailVerified()){
                         //Take to Home Page
                         startActivity(new Intent(MainActivity.this, HomeScreen.class));
                     }else {
                         user.sendEmailVerification();
+                        progressBar.setVisibility(View.GONE);
                         Toast.makeText(MainActivity.this, "Email verification sent, please confirm email", Toast.LENGTH_LONG).show();
                     }
 
                 }
+                //login failed
                 else{
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(MainActivity.this,"That's not the right info yo", Toast.LENGTH_LONG).show();
                 }
             }
+
         });
 
     }
