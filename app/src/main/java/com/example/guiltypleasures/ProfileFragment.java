@@ -127,9 +127,7 @@ public class ProfileFragment extends Fragment {
         final ProgressDialog pd = new ProgressDialog(getActivity());
         pd.setTitle("uploading...");
         pd.show();
-
-        final String key = UUID.randomUUID().toString();
-        StorageReference imageref = storagereference.child("images/" + key);
+        StorageReference imageref = storagereference.child("Users/" + userID + "/ProfilePic");
 
         imageref.putFile(imageuri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -137,6 +135,12 @@ public class ProfileFragment extends Fragment {
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         pd.dismiss();
                         Toast.makeText(getActivity(), "Image uploaded successfully!", Toast.LENGTH_LONG).show();
+                        imageref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                reference.child(userID).child("profilepicture").setValue(uri.toString());
+                            }
+                        });
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
