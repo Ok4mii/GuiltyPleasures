@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GuiltyPleasures">
-        <activity android:name=".HomeScreen"></activity>
+        <activity
+            android:name=".ForgotPassword"
+            android:exported="true" />
+        <activity android:name=".HomeScreen" />
         <activity android:name=".RegisterUser" />
         <activity android:name=".MainActivity">
             <intent-filter>

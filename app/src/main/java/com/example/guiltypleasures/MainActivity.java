@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private TextView register;
+    private TextView forgotten;
     private EditText editTextEmail, editTextPassword;
     private Button login;
 
@@ -38,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         register = (TextView) findViewById(R.id.newUser);
         register.setOnClickListener(this);
+
+        forgotten = (TextView) findViewById(R.id.forgotPass);
+        forgotten.setOnClickListener(this);
 
         login = (Button) findViewById(R.id.logIn);
         login.setOnClickListener(this);
@@ -60,6 +64,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.logIn:
                 //Attempts to log in user
                 userLogin();
+                break;
+            case R.id.forgotPass:
+                startActivity(new Intent(this, ForgotPassword.class));
                 break;
         }
     }
