@@ -1,5 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f42"/>
+    android:background="#1f1f1f">
+
+    <Switch
+        android:id="@+id/childMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="259dp"
+        tools:layout_editor_absoluteY="118dp" />
+
+    <Switch
+        android:id="@+id/allowComments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="259dp"
+        tools:layout_editor_absoluteY="167dp" />
+
+    <Switch
+        android:id="@+id/lightMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="259dp"
+        tools:layout_editor_absoluteY="212dp" />
+
+    <Button
+        android:id="@+id/buttonChangeUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="41dp"
+        android:text="Change Username"
+        tools:layout_editor_absoluteX="210dp"
+        tools:layout_editor_absoluteY="281dp" />
+
+    <Button
+        android:id="@+id/buttonChangeEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="41dp"
+        android:text="Change Email"
+        tools:layout_editor_absoluteX="247dp"
+        tools:layout_editor_absoluteY="345dp" />
+
+    <TextView
+        android:id="@+id/textLightMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enable Light Mode"
+        android:textColor="#FFFFFF"
+        tools:layout_editor_absoluteX="69dp"
+        tools:layout_editor_absoluteY="220dp" />
+
+    <TextView
+        android:id="@+id/textProfileComments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enable Profile Comments"
+        android:textColor="#FFFFFF"
+        tools:layout_editor_absoluteX="27dp"
+        tools:layout_editor_absoluteY="167dp" />
+
+    <TextView
+        android:id="@+id/textChildMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Allow Rated R Movies"
+        android:textColor="#FFFFFF"
+        tools:layout_editor_absoluteX="49dp"
+        tools:layout_editor_absoluteY="118dp" />
+
+    <EditText
+        android:id="@+id/editTextUsername"
+        android:layout_width="168dp"
+        android:layout_height="41dp"
+        android:backgroundTint="#FA97B8"
+        android:ems="10"
+        android:hint="New Username"
+        android:inputType="textPersonName"
+        android:textColor="@color/white"
+        android:textColorHint="#737373"
+        tools:layout_editor_absoluteX="17dp"
+        tools:layout_editor_absoluteY="281dp" />
+
+    <EditText
+        android:id="@+id/editTextEmail"
+        android:layout_width="168dp"
+        android:layout_height="41dp"
+        android:backgroundTint="#FA97B8"
+        android:ems="10"
+        android:hint="New Email"
+        android:inputType="textPersonName"
+        android:textColor="@color/white"
+        android:textColorHint="#737373"
+        tools:layout_editor_absoluteX="17dp"
+        tools:layout_editor_absoluteY="345dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
