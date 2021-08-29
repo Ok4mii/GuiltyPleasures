@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -26,10 +27,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static String JSON_Parse = "https://api.themoviedb.org/3/movie/upcoming?api_key=8ef07998664a58a01082bc2ab507fcb8";
 
+    private SharedPreferences mPreferences;
+    private SharedPreferences.Editor mEditor;
     private TextView register;
     private TextView forgotten;
     private EditText editTextEmail, editTextPassword;
     private Button login;
+    private CheckBox light;
 
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
@@ -38,6 +42,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mPreferences = getSharedPreferences("com.example.Prefs_Guilty_Pleasures", Context.MODE_PRIVATE);
+        mEditor = mPreferences.edit();
 
         register = findViewById(R.id.newUser);
         register.setOnClickListener(this);
@@ -51,9 +58,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);
 
+        light = findViewById(R.id.lightswitch);
+
         progressBar = findViewById(R.id.progressBar);
 
         mAuth = FirebaseAuth.getInstance();
+
+        CheckSharedPrefs();
+
+        light.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (light.isChecked()){
+                mEditor.putString(getString(R.string.LightMode), "true");
+                mEditor.commit();
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }else{
+                mEditor.putString(getString(R.string.LightMode), "false");
+                mEditor.commit();
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+        });
+    }
+
+    private void CheckSharedPrefs(){
+        String LightMode = mPreferences.getString(getString(R.string.LightMode), "false");
+
+        if (LightMode.equals("true")){
+            light.setChecked(true);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
     }
 
     @Override
@@ -126,6 +158,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(MainActivity.this,"That's not the right info yo", Toast.LENGTH_LONG).show();
             }
         });
-
     }
 }
