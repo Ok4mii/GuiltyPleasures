@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
@@ -40,6 +42,7 @@ import java.util.UUID;
 public class ProfileFragment extends Fragment {
 
     private TextView logout;
+    private TextView settings;
     private FirebaseUser user;
     private FirebaseStorage storage;
     private StorageReference storagereference;
@@ -55,7 +58,8 @@ public class ProfileFragment extends Fragment {
         View v = inflater.inflate(R.layout.profile_fragment,container,false);
 
         profileimage = v.findViewById(R.id.ProfileImage);
-        logout = (Button) v.findViewById(R.id.logout);
+        logout =  v.findViewById(R.id.logout);
+        settings = v.findViewById(R.id.usersettings);
 
         //get user info
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -65,7 +69,7 @@ public class ProfileFragment extends Fragment {
         storagereference = storage.getReference();
 
         //change details on page to that of user (may need to add more info)
-        final TextView UserName = (TextView) v.findViewById(R.id.Username);
+        final TextView UserName = v.findViewById(R.id.Username);
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -85,21 +89,23 @@ public class ProfileFragment extends Fragment {
         });
 
         //logout user
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getActivity(), MainActivity.class));
-            }
+        logout.setOnClickListener(v1 -> {
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(getActivity(), MainActivity.class));
+        });
+
+        //settings fragment change test
+        settings.setOnClickListener(v12 -> {
+            Toast.makeText(getActivity(), "The button was clicked", Toast.LENGTH_LONG).show();
+            assert getFragmentManager() != null;
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            Fragment newfrag = new SettingsFragment();
+            ft.add(R.id.fragment_container, newfrag);
+            ft.commit();
         });
 
         //profile picture
-        profileimage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseimage();
-            }
-        });
+        profileimage.setOnClickListener(v13 -> chooseimage());
 
         return v;
     }
@@ -116,10 +122,13 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1 && resultCode == -1 && data.getData() != null){
-            imageuri = data.getData();
-            profileimage.setImageURI(imageuri);
-            uploadPicture();
+        if(requestCode == 1 && resultCode == -1) {
+            assert data != null;
+            if (data.getData() != null) {
+                imageuri = data.getData();
+                profileimage.setImageURI(imageuri);
+                uploadPicture();
+            }
         }
     }
 
@@ -130,32 +139,18 @@ public class ProfileFragment extends Fragment {
         StorageReference imageref = storagereference.child("Users/" + userID + "/ProfilePic");
 
         imageref.putFile(imageuri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        pd.dismiss();
-                        Toast.makeText(getActivity(), "Image uploaded successfully!", Toast.LENGTH_LONG).show();
-                        imageref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                reference.child(userID).child("profilepicture").setValue(uri.toString());
-                            }
-                        });
-                    }
+                .addOnSuccessListener(taskSnapshot -> {
+                    pd.dismiss();
+                    Toast.makeText(getActivity(), "Image uploaded successfully!", Toast.LENGTH_LONG).show();
+                    imageref.getDownloadUrl().addOnSuccessListener(uri -> reference.child(userID).child("profilepicture").setValue(uri.toString()));
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        pd.dismiss();
-                        Toast.makeText(getActivity(), "Image upload failed!", Toast.LENGTH_LONG).show();
-                    }
+                .addOnFailureListener(e -> {
+                    pd.dismiss();
+                    Toast.makeText(getActivity(), "Image upload failed!", Toast.LENGTH_LONG).show();
                 })
-                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                        double progresspercent = (100.00 + snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
-                        pd.setMessage("percentage: " + (int) progresspercent);
-                    }
+                .addOnProgressListener(snapshot -> {
+                    double progresspercent = (100.00 + snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+                    pd.setMessage("percentage: " + (int) progresspercent);
                 });
     }
 }
