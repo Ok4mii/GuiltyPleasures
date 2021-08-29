@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ import java.util.UUID;
 public class ProfileFragment extends Fragment {
 
     private TextView logout;
+    private TextView settings;
     private FirebaseUser user;
     private FirebaseStorage storage;
     private StorageReference storagereference;
@@ -56,6 +58,7 @@ public class ProfileFragment extends Fragment {
 
         profileimage = v.findViewById(R.id.ProfileImage);
         logout = (Button) v.findViewById(R.id.logout);
+        settings = (Button) v.findViewById(R.id.usersettings);
 
         //get user info
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -90,6 +93,17 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(getActivity(), MainActivity.class));
+            }
+        });
+
+        //settings fragment change test
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "The button was clicked", Toast.LENGTH_LONG).show();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
+
+
             }
         });
 

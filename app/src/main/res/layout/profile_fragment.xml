@@ -20,27 +20,27 @@
 
     <Button
         android:id="@+id/logout"
-        android:layout_width="wrap_content"
+        android:layout_width="115dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginBottom="64dp"
         android:text="Logout"
+        app:backgroundTint="#FA97B8"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:backgroundTint="#FA97B8"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/usersettings"
-        android:layout_width="wrap_content"
+        android:layout_width="115dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginLeft="40dp"
         android:layout_marginBottom="64dp"
         android:text="Settings"
+        app:backgroundTint="#FA97B8"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:backgroundTint="#FA97B8"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/Username"
@@ -52,5 +52,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/friendslist"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="Friends"
+        app:backgroundTint="#FA97B8"
+        tools:layout_editor_absoluteX="130dp"
+        tools:layout_editor_absoluteY="369dp" />
+
+    <Button
+        android:id="@+id/userReviews"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="Reviews"
+        app:backgroundTint="#FA97B8"
+        tools:layout_editor_absoluteX="128dp"
+        tools:layout_editor_absoluteY="454dp" />
+
+    <Button
+        android:id="@+id/profileComments"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="Comments"
+        app:backgroundTint="#FA97B8"
+        tools:layout_editor_absoluteX="130dp"
+        tools:layout_editor_absoluteY="536dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
