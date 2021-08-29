@@ -4,14 +4,15 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1f1f1f">
+    android:background="@color/Background">
 
     <ImageView
         android:id="@+id/ProfileImage"
         android:layout_width="130dp"
         android:layout_height="149dp"
         android:layout_marginTop="120dp"
-        app:tint="#ff99cc"
+        android:contentDescription="more placeholders"
+        app:tint="@color/GuiltyPink"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

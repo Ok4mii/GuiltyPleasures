@@ -5,18 +5,19 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1f1f1f">
+    android:background="@color/Background">
 
     <ImageView
         android:id="@+id/ProfileImage"
         android:layout_width="130dp"
         android:layout_height="149dp"
         android:layout_marginTop="44dp"
+        android:contentDescription="Users profile image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/guilty_pleasures_temp_logo"/>
+        app:srcCompat="@drawable/guilty_pleasures_temp_logo" />
 
     <Button
         android:id="@+id/logout"
@@ -26,7 +27,7 @@
         android:layout_marginRight="40dp"
         android:layout_marginBottom="92dp"
         android:text="Logout"
-        app:backgroundTint="#FA97B8"
+        app:backgroundTint="@color/GuiltyPink"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -47,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="212dp"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/Text"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +60,7 @@
         android:layout_height="50dp"
         android:layout_marginBottom="300dp"
         android:text="Reviews"
-        app:backgroundTint="#FA97B8"
+        app:backgroundTint="@color/GuiltyPink"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -71,7 +72,7 @@
         android:layout_height="50dp"
         android:layout_marginBottom="400dp"
         android:text="Friends"
-        app:backgroundTint="#FA97B8"
+        app:backgroundTint="@color/GuiltyPink"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -83,7 +84,7 @@
         android:layout_height="50dp"
         android:layout_marginBottom="200dp"
         android:text="Comments"
-        app:backgroundTint="#FA97B8"
+        app:backgroundTint="@color/GuiltyPink"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"

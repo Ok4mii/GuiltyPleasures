@@ -39,18 +39,18 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
         mAuth = FirebaseAuth.getInstance();
 
-        banner = (ImageView) findViewById(R.id.logo3);
+        banner = findViewById(R.id.logo3);
         banner.setOnClickListener(this);
 
-        RegisterUser = (Button) findViewById(R.id.registerbutton);
+        RegisterUser = findViewById(R.id.registerbutton);
         RegisterUser.setOnClickListener(this);
 
-        editTextName = (EditText) findViewById(R.id.createRealName);
-        editTextUsername = (EditText) findViewById(R.id.createUserName);
-        editTextEmail = (EditText) findViewById(R.id.createEmail);
-        editTextPassword = (EditText) findViewById(R.id.createpassword);
+        editTextName = findViewById(R.id.createRealName);
+        editTextUsername = findViewById(R.id.createUserName);
+        editTextEmail = findViewById(R.id.createEmail);
+        editTextPassword = findViewById(R.id.createpassword);
 
-        progressBar = (ProgressBar) findViewById(R.id.progressBar2);
+        progressBar = findViewById(R.id.progressBar2);
     }
 
     @Override
@@ -72,7 +72,6 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         String name = editTextName.getText().toString().trim();
         String username = editTextUsername.getText().toString().trim();
         String defaultprofilepic = "https://firebasestorage.googleapis.com/v0/b/guilty-pleasures-b678a.appspot.com/o/images%2F25d154e9-8e98-446b-a265-6901760c3e94?alt=media&token=5cdce5a4-cb81-4232-a722-3cf2c34d932c";
-        boolean defaultcolorscheme = false;
 
         if(name.isEmpty()){
             editTextName.setError("Give me a name yo");
@@ -107,20 +106,16 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
         progressBar.setVisibility(View.VISIBLE);
         mAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
+            .addOnCompleteListener(task -> {
 
-                    if(task.isSuccessful()) {
-                        User user = new User(name, username, email, defaultprofilepic, false);
+                if(task.isSuccessful()) {
+                    User user = new User(name, username, email, defaultprofilepic);
 
-                        FirebaseDatabase.getInstance().getReference("Users")
-                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
+                    FirebaseDatabase.getInstance().getReference("Users")
+                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            .setValue(user).addOnCompleteListener(task1 -> {
 
-                                if (task.isSuccessful()) {
+                                if (task1.isSuccessful()) {
                                     Toast.makeText(RegisterUser.this, "Account Created!", Toast.LENGTH_SHORT).show();
                                     progressBar.setVisibility(View.GONE);
                                     finish();
@@ -130,13 +125,11 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                                     progressBar.setVisibility((View.GONE));
                                 }
 
-                            }
-                        });
+                            });
 
-                        }else{
-                        Toast.makeText(RegisterUser.this, "Registration Failed.", Toast.LENGTH_SHORT).show();
-                        progressBar.setVisibility((View.GONE));
-                    }
+                    }else{
+                    Toast.makeText(RegisterUser.this, "Registration Failed.", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility((View.GONE));
                 }
             });
     }
