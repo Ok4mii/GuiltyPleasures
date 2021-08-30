@@ -7,13 +7,17 @@
     tools:context=".HomeScreen"
     android:background="@color/Background">
 
-   <FrameLayout
-       android:id="@+id/fragment_container"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:layout_above="@id/bottom_nav">
-
-   </FrameLayout>
+   <ImageView
+       android:id="@+id/ProfileImage"
+       android:layout_width="130dp"
+       android:layout_height="149dp"
+       android:layout_marginTop="120dp"
+       android:contentDescription="another placeholder"
+       app:tint="#ff99cc"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       app:srcCompat="@drawable/home_icon" />
 
    <com.google.android.material.bottomnavigation.BottomNavigationView
        android:id="@+id/bottom_nav"
@@ -25,7 +29,7 @@
        app:itemHorizontalTranslationEnabled="true"
        app:itemIconTint="@drawable/color_state"
        app:itemTextColor="@drawable/color_state"
-       app:layout_constraintBottom_toBottomOf="@+id/fragment_container"
+       app:layout_constraintBottom_toBottomOf="parent"
        app:menu="@menu/bottom_navigation">
 
    </com.google.android.material.bottomnavigation.BottomNavigationView>

@@ -9,6 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GuiltyPleasures">
+        <activity android:name=".Database"></activity>
+        <activity android:name=".List" />
+        <activity android:name=".UserSettings" />
+        <activity android:name=".UserProfile" />
         <activity
             android:name=".ForgotPassword"
             android:exported="true" />

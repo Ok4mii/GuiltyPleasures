@@ -11,11 +11,27 @@
         android:layout_width="130dp"
         android:layout_height="149dp"
         android:layout_marginTop="120dp"
-        android:contentDescription="this is just a placeholder"
+        android:contentDescription="more placeholders"
         app:tint="@color/GuiltyPink"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/list_icon" />
+        app:srcCompat="@drawable/database_icon" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#111111"
+        app:itemBackground="?selectableItemBackgroundBorderless"
+        app:itemHorizontalTranslationEnabled="true"
+        app:itemIconTint="@drawable/color_state"
+        app:itemTextColor="@drawable/color_state"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_navigation">
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
