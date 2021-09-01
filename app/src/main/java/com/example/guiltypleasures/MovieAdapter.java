@@ -18,7 +18,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     private Context mContext;
     private List<UpcomingMovieClass> mData;
 
-    public MovieAdapter(Context mContext, List<UpcomingMovieClass> mData) {
+    public MovieAdapter(Context mContext) {
         this.mContext = mContext;
         this.mData = mData;
     }
@@ -38,7 +38,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
 
         holder.id.setText(mData.get(position).getId());
         holder.title.setText(mData.get(position).getTitle());
-        Glide.with(mContext).load(mData.get(position).getImg()).into(holder.img);
+        Glide.with(mContext).load("https://image.tmdb.org/t/p/w500" + mData.get(position).getImg()).into(holder.img);
 
 
     }
