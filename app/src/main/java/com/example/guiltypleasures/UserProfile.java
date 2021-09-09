@@ -32,6 +32,7 @@ public class UserProfile extends AppCompatActivity {
 
     private TextView logout;
     private TextView settings;
+    private TextView friends;
     private FirebaseUser user;
     private FirebaseStorage storage;
     private StorageReference storagereference;
@@ -49,6 +50,7 @@ public class UserProfile extends AppCompatActivity {
         profileimage = findViewById(R.id.ProfileImage);
         logout =  findViewById(R.id.logout);
         settings = findViewById(R.id.usersettings);
+        friends = findViewById(R.id.friendslist);
         toolbar = getSupportActionBar();
 
         //get user info
@@ -66,9 +68,9 @@ public class UserProfile extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userprofile = snapshot.getValue(User.class);
                 if (userprofile != null){
-                    String username = userprofile.username;
+                    String username = userprofile.getUsername();
                     UserName.setText(username);
-                    Glide.with(UserProfile.this).load(userprofile.profilepicture).into(profileimage);
+                    Glide.with(UserProfile.this).load(userprofile.getProfilepicture()).into(profileimage);
                 }
             }
 
@@ -82,12 +84,21 @@ public class UserProfile extends AppCompatActivity {
         logout.setOnClickListener(v1 -> {
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(UserProfile.this, MainActivity.class));
+            UserProfile.this.finish();
         });
 
-        //settings fragment change test
+        //settings change test
         settings.setOnClickListener(v12 -> {
             Toast.makeText(UserProfile.this, "The button was clicked", Toast.LENGTH_LONG).show();
             startActivity(new Intent(UserProfile.this, UserSettings.class));
+            UserProfile.this.finish();
+        });
+
+        //Friends change test
+        friends.setOnClickListener(v12 -> {
+            Toast.makeText(UserProfile.this, "The button was clicked", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(UserProfile.this, Friends.class));
+            UserProfile.this.finish();
         });
 
         //profile picture
@@ -152,15 +163,19 @@ public class UserProfile extends AppCompatActivity {
                     {
                         case R.id.homepage:
                             startActivity(new Intent(UserProfile.this, HomeScreen.class));
+                            UserProfile.this.finish();
                             break;
                         case R.id.database:
                             startActivity(new Intent(UserProfile.this, Database.class));
+                            UserProfile.this.finish();
                             break;
                         case R.id.list:
                             startActivity(new Intent(UserProfile.this, List.class));
+                            UserProfile.this.finish();
                             break;
                         case R.id.profile:
                             startActivity(new Intent(UserProfile.this, UserProfile.class));
+                            UserProfile.this.finish();
                             break;
                     }
 

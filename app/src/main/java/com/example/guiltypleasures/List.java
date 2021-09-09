@@ -35,15 +35,19 @@ public class List extends AppCompatActivity {
                     {
                         case R.id.homepage:
                             startActivity(new Intent(List.this, HomeScreen.class));
+                            List.this.finish();
                             break;
                         case R.id.database:
                             startActivity(new Intent(List.this, Database.class));
+                            List.this.finish();
                             break;
                         case R.id.list:
                             startActivity(new Intent(List.this, List.class));
+                            List.this.finish();
                             break;
                         case R.id.profile:
                             startActivity(new Intent(List.this, UserProfile.class));
+                            List.this.finish();
                             break;
                     }
 
