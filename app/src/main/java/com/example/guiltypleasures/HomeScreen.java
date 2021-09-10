@@ -43,7 +43,8 @@ public class HomeScreen extends AppCompatActivity {
         setContentView(R.layout.activity_home_screen);
 
         upcomingMovies = new ArrayList<>();
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerview);
+
         toolbar = getSupportActionBar();
 
         GetData getData = new GetData();
@@ -123,11 +124,12 @@ public class HomeScreen extends AppCompatActivity {
 
                 for(int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
                     UpcomingMovieClass up = new UpcomingMovieClass();
 
                     up.setId(jsonObject1.getString("vote_average"));
                     up.setTitle(jsonObject1.getString("title"));
-                    up.setImg(jsonObject1.getString("post_path"));
+                    up.setImg(jsonObject1.getString("poster_path"));
 
                     upcomingMovies.add(up);
                 }
@@ -140,7 +142,7 @@ public class HomeScreen extends AppCompatActivity {
         }
     }
     private void PutDataIntoRecyclerView(List<UpcomingMovieClass> upcomingMovies) {
-        MovieAdapter adapter = new MovieAdapter(this);
+        MovieAdapter adapter = new MovieAdapter(this, upcomingMovies);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }

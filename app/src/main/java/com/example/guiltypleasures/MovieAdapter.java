@@ -18,7 +18,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     private Context mContext;
     private List<UpcomingMovieClass> mData;
 
-    public MovieAdapter(Context mContext) {
+    public MovieAdapter(Context mContext, List<UpcomingMovieClass> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
@@ -57,8 +57,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            id = itemView.findViewById(R.id.movie_name);
-            title = itemView.findViewById(R.id.id_txt);
+            id = itemView.findViewById(R.id.id_txt);
+            title = itemView.findViewById(R.id.movie_name);
             img = itemView.findViewById(R.id.imageView);
         }
     }
