@@ -52,6 +52,10 @@ public class HomeScreen extends AppCompatActivity {
         //create object of class and execute methods
         GetData getData = new GetData();
         getData.execute();
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
+        bottomNav.setSelectedItemId(R.id.homepage);
+        bottomNav.setOnNavigationItemSelectedListener(NavigationListener);
     }
 
     //GetData Class
@@ -150,4 +154,33 @@ public class HomeScreen extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener NavigationListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    switch (item.getItemId())
+                    {
+                        case R.id.homepage:
+                            startActivity(new Intent(HomeScreen.this, HomeScreen.class));
+                            HomeScreen.this.finish();
+                            break;
+                        case R.id.database:
+                            startActivity(new Intent(HomeScreen.this, Database.class));
+                            HomeScreen.this.finish();
+                            break;
+                        case R.id.list:
+                            startActivity(new Intent(HomeScreen.this, com.example.guiltypleasures.List.class));
+                            HomeScreen.this.finish();
+                            break;
+                        case R.id.profile:
+                            startActivity(new Intent(HomeScreen.this, UserProfile.class));
+                            HomeScreen.this.finish();
+                            break;
+                    }
+
+                    return true;
+                }
+            };
 }
