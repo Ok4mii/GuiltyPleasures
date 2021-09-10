@@ -47,8 +47,8 @@ public class HomeScreen extends AppCompatActivity {
 
         toolbar = getSupportActionBar();
 
-        GetData getData = new GetData();
-        getData.execute();
+        //GetData getData = new GetData();
+        //getData.execute();
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setOnNavigationItemSelectedListener(NavigationListener);
@@ -64,15 +64,19 @@ public class HomeScreen extends AppCompatActivity {
                     {
                         case R.id.homepage:
                             startActivity(new Intent(HomeScreen.this, HomeScreen.class));
+                            HomeScreen.this.finish();
                             break;
                         case R.id.database:
                             startActivity(new Intent(HomeScreen.this, Database.class));
+                            HomeScreen.this.finish();
                             break;
                         case R.id.list:
                             startActivity(new Intent(HomeScreen.this, List.class));
+                            HomeScreen.this.finish();
                             break;
                         case R.id.profile:
                             startActivity(new Intent(HomeScreen.this, UserProfile.class));
+                            HomeScreen.this.finish();
                             break;
                     }
 

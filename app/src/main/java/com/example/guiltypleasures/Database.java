@@ -35,15 +35,19 @@ public class Database extends AppCompatActivity {
                     {
                         case R.id.homepage:
                             startActivity(new Intent(Database.this, HomeScreen.class));
+                            Database.this.finish();
                             break;
                         case R.id.database:
                             startActivity(new Intent(Database.this, Database.class));
+                            Database.this.finish();
                             break;
                         case R.id.list:
                             startActivity(new Intent(Database.this, List.class));
+                            Database.this.finish();
                             break;
                         case R.id.profile:
                             startActivity(new Intent(Database.this, UserProfile.class));
+                            Database.this.finish();
                             break;
                     }
 
