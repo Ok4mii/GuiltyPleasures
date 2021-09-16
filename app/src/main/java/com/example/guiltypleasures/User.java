@@ -8,6 +8,7 @@ public class User {
     public String username;
     public String email;
     public String profilepicture;
+    public String userID;
 
     public User(){
 
@@ -18,6 +19,7 @@ public class User {
         this.username = username;
         this.email = email;
         this.profilepicture = profilepic;
+        this.userID = "fake";
     }
 
     public String getRealname() {
@@ -51,4 +53,8 @@ public class User {
     public void setProfilepicture(String profilepicture) {
         this.profilepicture = profilepicture;
     }
+
+    public String getUserID() { return userID; }
+
+    public void setUserID(String userID) { this.userID = userID; }
 }
