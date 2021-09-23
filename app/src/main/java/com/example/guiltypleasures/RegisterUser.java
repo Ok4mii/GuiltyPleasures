@@ -106,31 +106,32 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
         progressBar.setVisibility(View.VISIBLE);
         mAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(task -> {
+                .addOnCompleteListener(task -> {
 
-                if(task.isSuccessful()) {
-                    User user = new User(name, username, email, defaultprofilepic);
+                    if(task.isSuccessful()) {
+                        User user = new User(name, username, email, defaultprofilepic);
 
-                    FirebaseDatabase.getInstance().getReference("Users")
-                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                            .setValue(user).addOnCompleteListener(task1 -> {
+                        FirebaseDatabase.getInstance().getReference("Users")
+                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                .setValue(user).addOnCompleteListener(task1 -> {
 
-                                if (task1.isSuccessful()) {
-                                    Toast.makeText(RegisterUser.this, "Account Created!", Toast.LENGTH_SHORT).show();
-                                    progressBar.setVisibility(View.GONE);
-                                    finish();
-                                    //back to login!
-                                } else {
-                                    Toast.makeText(RegisterUser.this, "Register Failed. Please try again.", Toast.LENGTH_SHORT).show();
-                                    progressBar.setVisibility((View.GONE));
-                                }
+                            if (task1.isSuccessful()) {
+                                Toast.makeText(RegisterUser.this, "Account Created!", Toast.LENGTH_SHORT).show();
+                                FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("userID").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                progressBar.setVisibility(View.GONE);
+                                finish();
+                                //back to login!
+                            } else {
+                                Toast.makeText(RegisterUser.this, "Register Failed. Please try again.", Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility((View.GONE));
+                            }
 
-                            });
+                        });
 
                     }else{
-                    Toast.makeText(RegisterUser.this, "Registration Failed.", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility((View.GONE));
-                }
-            });
+                        Toast.makeText(RegisterUser.this, "Registration Failed.", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility((View.GONE));
+                    }
+                });
     }
 }

@@ -4,4 +4,5 @@
     <string name="ProfileComments">com.example.GuiltyPleasures_Prefs.ProfileComments</string>
     <string name="ChildMode">com.example.GuiltyPleasures_Prefs.ChildMode</string>
     <string name="hello_blank_fragment">SharedPreferences</string>
+    <string name="userID">com.example.GuiltyPleasures_Prefs.userID</string>
 </resources>

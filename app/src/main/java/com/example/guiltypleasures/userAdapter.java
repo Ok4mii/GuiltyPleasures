@@ -2,6 +2,7 @@ package com.example.guiltypleasures;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +22,8 @@ import java.util.ArrayList;
 public class userAdapter extends RecyclerView.Adapter<userAdapter.MyViewHolder> {
 
     Context context;
-
+    private SharedPreferences mPreferences;
+    private SharedPreferences.Editor mEditor;
     ArrayList<User> list;
 
     public userAdapter(Context context, ArrayList<User> list) {
@@ -39,11 +41,15 @@ public class userAdapter extends RecyclerView.Adapter<userAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull userAdapter.MyViewHolder holder, int position) {
 
+        mPreferences = context.getSharedPreferences("com.example.Prefs_Guilty_Pleasures", Context.MODE_PRIVATE);
+        mEditor = mPreferences.edit();
         User user = list.get(position);
         holder.Username.setText(user.getUsername());
         holder.Username.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mEditor.putString(context.getString(R.string.userID), user.userID);
+                mEditor.commit();
                 Intent intent = new Intent(context, UserProfileOther.class);
                 context.startActivity(intent);
             }
