@@ -1,7 +1,6 @@
 package com.example.guiltypleasures;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -64,7 +63,7 @@ public class HomeScreen extends AppCompatActivity {
         //set and create variables
         upcomingMovies = new ArrayList<>();
         popularMovies = new ArrayList<>();
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView1);
 
         //shared preferences
         mPreferences = getSharedPreferences("com.example.Prefs_Guilty_Pleasures", Context.MODE_PRIVATE);
