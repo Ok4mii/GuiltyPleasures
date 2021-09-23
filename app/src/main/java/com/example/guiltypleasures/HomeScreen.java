@@ -7,7 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -48,6 +50,9 @@ public class HomeScreen extends AppCompatActivity {
     RecyclerView recyclerViewPopupAds;
     ImageView popupExit;
 
+    //Shared Preferences
+    private SharedPreferences mPreferences;
+    private SharedPreferences.Editor mEditor;
 
     //create Home Screen
     @Override
@@ -61,15 +66,25 @@ public class HomeScreen extends AppCompatActivity {
         popularMovies = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerView);
 
-        //Call Popup
-        createNewContactDialog();
+        //shared preferences
+        mPreferences = getSharedPreferences("com.example.Prefs_Guilty_Pleasures", Context.MODE_PRIVATE);
+        mEditor = mPreferences.edit();
 
         //create object of class and execute methods
         GetData getData = new GetData();
         getData.execute();
 
-        GetDataPopup popup = new GetDataPopup();
-        popup.execute();
+        //Call Popup
+        boolean PopUpCall = mPreferences.getBoolean("DialogShow", true);
+
+        if(PopUpCall) {
+            createNewContactDialog();
+            mEditor.putBoolean("DialogShow", false);
+            mEditor.apply();
+
+            GetDataPopup popup = new GetDataPopup();
+            popup.execute();
+        }
 
         //Create bottom navigation bar
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);

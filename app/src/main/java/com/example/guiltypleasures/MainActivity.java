@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button login;
     private CheckBox light;
 
-    //Misc
+    //Shared Preferences
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
 
@@ -161,6 +161,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(user.isEmailVerified()){
                     //Take to Home Page
                     startActivity(new Intent(MainActivity.this, HomeScreen.class));
+
+                    //PopUp Stuff
+                    mEditor.putBoolean("DialogShow", true);
+                    mEditor.apply();
                 }
                 //if not
                 else {
