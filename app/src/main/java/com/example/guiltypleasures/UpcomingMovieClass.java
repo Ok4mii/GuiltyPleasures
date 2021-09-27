@@ -5,12 +5,20 @@ public class UpcomingMovieClass {
     String id;
     String title;
     String img;
+    String backImg;
+    String overview;
+    String releaseDate;
+
 
     //constructor
-    public UpcomingMovieClass(String id, String title, String img) {
+    public UpcomingMovieClass(String id, String title, String img, String backImg, String overview, String releaseDate) {
         this.id = id;
         this.title = title;
         this.img = img;
+        this.backImg = backImg;
+        this.overview = overview;
+        this.releaseDate = releaseDate;
+
     }
 
     //constructor 2
@@ -37,5 +45,27 @@ public class UpcomingMovieClass {
     }
     public void setImg(String img) {
         this.img = img;
+    }
+    public String getBackImg() {
+        return backImg;
+    }
+
+    public void setBackImg(String backImg) {
+        this.backImg = backImg;
+    }
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
     }
 }

@@ -11,7 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GuiltyPleasures">
-        <activity android:name=".UserProfileOther"></activity>
+        <activity
+            android:name=".MovieInfo"
+            android:exported="true" />
+        <activity android:name=".UserProfileOther" />
         <activity android:name=".UserSearch" />
         <activity android:name=".Friends" />
         <activity android:name=".Database" />

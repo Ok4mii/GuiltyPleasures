@@ -1,6 +1,7 @@
 package com.example.guiltypleasures;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         //create holder and initiate created movie variable widgets
         holder.id.setText(mData.get(position).getId());
         holder.title.setText(mData.get(position).getTitle());
+        holder.img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, MovieInfo.class);
+                mContext.startActivity(intent);
+            }
+        });
         Glide.with(mContext).load("https://image.tmdb.org/t/p/w500" + mData.get(position).getImg()).into(holder.img);
     }
 
