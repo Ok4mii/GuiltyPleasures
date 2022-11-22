@@ -1,28 +1,23 @@
 package com.example.guiltypleasures;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.provider.Settings;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
-
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,18 +26,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import org.w3c.dom.Text;
-
-import java.util.UUID;
-
-public class ProfileFragment extends Fragment {
+public class UserProfile extends AppCompatActivity {
 
     private TextView logout;
     private TextView settings;
+    private TextView friends;
     private FirebaseUser user;
     private FirebaseStorage storage;
     private StorageReference storagereference;
@@ -50,16 +40,18 @@ public class ProfileFragment extends Fragment {
     private String userID;
     private ImageView profileimage;
     public Uri imageuri;
+    private ActionBar toolbar;
 
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.profile_fragment,container,false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_user_profile);
 
-        profileimage = v.findViewById(R.id.ProfileImage);
-        logout =  v.findViewById(R.id.logout);
-        settings = v.findViewById(R.id.usersettings);
+        profileimage = findViewById(R.id.ProfileImage);
+        logout =  findViewById(R.id.logout);
+        settings = findViewById(R.id.usersettings);
+        friends = findViewById(R.id.friendslist);
+        toolbar = getSupportActionBar();
 
         //get user info
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -69,45 +61,53 @@ public class ProfileFragment extends Fragment {
         storagereference = storage.getReference();
 
         //change details on page to that of user (may need to add more info)
-        final TextView UserName = v.findViewById(R.id.Username);
+        final TextView UserName = findViewById(R.id.Username);
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userprofile = snapshot.getValue(User.class);
                 if (userprofile != null){
-                    String username = userprofile.username;
+                    String username = userprofile.getUsername();
                     UserName.setText(username);
-                    Glide.with(getActivity()).load(userprofile.profilepicture).into(profileimage);
+                    Glide.with(UserProfile.this).load(userprofile.getProfilepicture()).into(profileimage);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity(), "Woah, something went wrong!", Toast.LENGTH_LONG).show();
+                Toast.makeText(UserProfile.this, "Woah, something went wrong!", Toast.LENGTH_LONG).show();
             }
         });
 
         //logout user
         logout.setOnClickListener(v1 -> {
             FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(getActivity(), MainActivity.class));
+            startActivity(new Intent(UserProfile.this, MainActivity.class));
+            UserProfile.this.finish();
         });
 
-        //settings fragment change test
+        //settings change test
         settings.setOnClickListener(v12 -> {
-            Toast.makeText(getActivity(), "The button was clicked", Toast.LENGTH_LONG).show();
-            assert getFragmentManager() != null;
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            Fragment newfrag = new SettingsFragment();
-            ft.add(R.id.fragment_container, newfrag);
-            ft.commit();
+            Toast.makeText(UserProfile.this, "The button was clicked", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(UserProfile.this, UserSettings.class));
+            UserProfile.this.finish();
+        });
+
+        //Friends change test
+        friends.setOnClickListener(v12 -> {
+            Toast.makeText(UserProfile.this, "The button was clicked", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(UserProfile.this, Friends.class));
+            UserProfile.this.finish();
         });
 
         //profile picture
         profileimage.setOnClickListener(v13 -> chooseimage());
 
-        return v;
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
+        bottomNav.setSelectedItemId(R.id.profile);
+        bottomNav.setOnNavigationItemSelectedListener(NavigationListener);
+
     }
 
     //choose image
@@ -133,7 +133,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void uploadPicture() {
-        final ProgressDialog pd = new ProgressDialog(getActivity());
+        final ProgressDialog pd = new ProgressDialog(UserProfile.this);
         pd.setTitle("uploading...");
         pd.show();
         StorageReference imageref = storagereference.child("Users/" + userID + "/ProfilePic");
@@ -141,16 +141,45 @@ public class ProfileFragment extends Fragment {
         imageref.putFile(imageuri)
                 .addOnSuccessListener(taskSnapshot -> {
                     pd.dismiss();
-                    Toast.makeText(getActivity(), "Image uploaded successfully!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(UserProfile.this, "Image uploaded successfully!", Toast.LENGTH_LONG).show();
                     imageref.getDownloadUrl().addOnSuccessListener(uri -> reference.child(userID).child("profilepicture").setValue(uri.toString()));
                 })
                 .addOnFailureListener(e -> {
                     pd.dismiss();
-                    Toast.makeText(getActivity(), "Image upload failed!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(UserProfile.this, "Image upload failed!", Toast.LENGTH_LONG).show();
                 })
                 .addOnProgressListener(snapshot -> {
                     double progresspercent = (100.00 + snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
                     pd.setMessage("percentage: " + (int) progresspercent);
                 });
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener NavigationListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    switch (item.getItemId())
+                    {
+                        case R.id.homepage:
+                            startActivity(new Intent(UserProfile.this, HomeScreen.class));
+                            UserProfile.this.finish();
+                            break;
+                        case R.id.database:
+                            startActivity(new Intent(UserProfile.this, Database.class));
+                            UserProfile.this.finish();
+                            break;
+                        case R.id.list:
+                            startActivity(new Intent(UserProfile.this, List.class));
+                            UserProfile.this.finish();
+                            break;
+                        case R.id.profile:
+                            startActivity(new Intent(UserProfile.this, UserProfile.class));
+                            UserProfile.this.finish();
+                            break;
+                    }
+
+                    return true;
+                }
+            };
 }

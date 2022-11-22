@@ -1,6 +1,5 @@
 package com.example.guiltypleasures;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -17,35 +16,38 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    //Movie API Key
     private static String JSON_Parse = "https://api.themoviedb.org/3/movie/upcoming?api_key=8ef07998664a58a01082bc2ab507fcb8";
 
-    private SharedPreferences mPreferences;
-    private SharedPreferences.Editor mEditor;
+    //Firebase Variables
+    private FirebaseAuth mAuth;
+    private ProgressBar progressBar;
+
+    //User Interface Variables
     private TextView register;
     private TextView forgotten;
     private EditText editTextEmail, editTextPassword;
     private Button login;
     private CheckBox light;
 
-    private FirebaseAuth mAuth;
-    private ProgressBar progressBar;
+    //Shared Preferences
+    private SharedPreferences mPreferences;
+    private SharedPreferences.Editor mEditor;
 
+
+    //creation of Main Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mPreferences = getSharedPreferences("com.example.Prefs_Guilty_Pleasures", Context.MODE_PRIVATE);
-        mEditor = mPreferences.edit();
-
+        //User Interface Variables Setting
+        //that require On Click
         register = findViewById(R.id.newUser);
         register.setOnClickListener(this);
 
@@ -55,15 +57,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         login = findViewById(R.id.logIn);
         login.setOnClickListener(this);
 
+        //that don't need on Click
         editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);
 
-        light = findViewById(R.id.lightswitch);
+        //Light Mode Variables
+        mPreferences = getSharedPreferences("com.example.Prefs_Guilty_Pleasures", Context.MODE_PRIVATE);
+        mEditor = mPreferences.edit();
+        light = findViewById(R.id.lightSwitch);
 
+        //FireBase Setting
+        mAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.progressBar);
 
-        mAuth = FirebaseAuth.getInstance();
-
+        //checks whenever light mode is turn on or off
         CheckSharedPrefs();
 
         light.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -79,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+
     private void CheckSharedPrefs(){
         String LightMode = mPreferences.getString(getString(R.string.LightMode), "false");
 
@@ -88,6 +96,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
+    //All OnClick Events
     @Override
     public void onClick(View v) {
         switch(v.getId()){
@@ -100,34 +110,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 userLogin();
                 break;
             case R.id.forgotPass:
+                //Bring User to Reset Password Link
                 startActivity(new Intent(this, ForgotPassword.class));
                 break;
         }
     }
 
+
+    //Verify information and Log User in
     private void userLogin() {
+        //Variables set to User Input in Text Fields
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
-        //checks if login info is entered
+        //checks if Email info is entered Correctly
         if (email.isEmpty()){
             editTextEmail.setError("Gotta give an email yo");
             editTextEmail.requestFocus();
             return;
         }
-
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             editTextEmail.setError("That's not a valid email yo");
             editTextEmail.requestFocus();
             return;
         }
 
+        //checks if Password info is entered Correctly
         if(password.isEmpty()){
             editTextPassword.setError("I don't see a password yo");
             editTextPassword.requestFocus();
             return;
         }
-
         if(password.length() < 6){
             editTextPassword.setError("Passwords are at least 6 characters yo");
             editTextPassword.requestFocus();
@@ -136,23 +149,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         progressBar.setVisibility(View.VISIBLE);
 
+        //attempts to Sign User if Previous Info Passes
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()){
+                //create User Instance Variable
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                //Check if verified, send registration email if not
                 assert user != null;
+
+                //if Email is verified
                 if(user.isEmailVerified()){
                     //Take to Home Page
                     startActivity(new Intent(MainActivity.this, HomeScreen.class));
-                }else {
+
+                    //PopUp Stuff
+                    mEditor.putBoolean("DialogShow", true);
+                    mEditor.apply();
+                }
+                //if not
+                else {
+                    //send Verification Email
                     user.sendEmailVerification();
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(MainActivity.this, "Email verification sent, please confirm email", Toast.LENGTH_LONG).show();
                 }
-
             }
-            //login failed
+            //if attempt fails
             else{
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(MainActivity.this,"That's not the right info yo", Toast.LENGTH_LONG).show();
